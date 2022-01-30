@@ -1,0 +1,24 @@
+{
+  "name": "cli-basic-js",
+  "version": "1.0.0",
+  "author": "rolandwarburton <warburtonroland@gmail.com>",
+  "description": "so simple it's not even typescript",
+  "main": "index.js",
+  "bin": {
+    "@rolandwarburton/cli-basic-js": "bin/index.js",
+    "cli-basic-js": "bin/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "start": "echo run npm link"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "esm": "^3.2.25",
+    "yargs": "^17.3.1"
+  }
+}

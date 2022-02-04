@@ -1,0 +1,28 @@
+{
+  "name": "cli-basic-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "@rolandwarburton/cliBasicTs": "bin/index.js",
+    "cliBasicTs": "bin/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "rolandwarburton <warburtonroland@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "@types/yargs": "^17.0.8",
+    "esm": "^3.2.25",
+    "yargs": "^17.3.1"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2021", // DO NOT CHANGE!
+    "module": "ES2022", // DO NOT CHANGE!
+    "moduleResolution": "Node",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+
+    "outDir": "./dist",
+    "types": ["node", "jest"],
+    "lib": ["ES6", "DOM"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules", ".vscode"]
+}

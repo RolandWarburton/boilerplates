@@ -1,0 +1,9 @@
+{
+  "moduleFileExtensions": ["js", "mjs"],
+  "transform": {
+    "^.+\\.js$": "babel-jest",
+    "^.+\\.mjs$": "babel-jest"
+  },
+
+  "testMatch": ["<rootDir>/src/tests/*.js"]
+}

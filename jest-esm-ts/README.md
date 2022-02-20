@@ -95,6 +95,14 @@ To build the project use `tsc -p tsconfig.json`.
   },
 ```
 
+## Running
+
+We can now build with `npm run build` which will emit code to the dist directory.
+
+Then run the tests with `npm run test` which will run jest.
+
+We can also run the code directly through the bin file with `node bin/bin.js`.
+
 ## Reading List
 
 [node and esm exports](https://formidable.com/blog/2021/node-esm-and-exports/).

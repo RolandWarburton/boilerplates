@@ -1,6 +1,6 @@
 import chalk from "chalk";
 
-export function bar() {
-  console.log(chalk.green("Hello world!"));
+export function bar(name: string) {
+  console.log(chalk.green(`Hello world! ${name}`));
   return 200;
 }

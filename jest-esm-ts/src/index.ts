@@ -4,11 +4,12 @@ import { bar } from "./bar.js";
 import { remark } from "remark";
 
 export async function foo() {
-  console.log(await fetch("https://wttr.in/moon").then((res) => res.text()));
+  const res = await fetch("https://wttr.in/moon");
+  console.log(await res.text());
   console.log(chalk.green("Hello world!"));
   console.log(remark().parse(`# Hello world!`));
-  bar();
-  return 200;
+  bar("roland");
+  return res.status;
 }
 
 export default foo;

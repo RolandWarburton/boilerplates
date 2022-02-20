@@ -13,5 +13,5 @@
     "lib": ["ES6", "DOM"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", ".vscode"]
+  "exclude": ["node_modules", "tests", ".vscode"]
 }

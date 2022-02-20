@@ -81,6 +81,20 @@ export default {
 
 Do not touch anything here, other than the `testMatch` setting to find the tests in your project.
 
+Update: An issue i had with chalk required this fix to be added. This might help when solving other modules that refuse to resolve.
+
+```js
+// jest.config.js
+export default {
+  // ...
+  // https://github.com/facebook/jest/issues/12270
+  moduleNameMapper: {
+    chalk: "chalk/source/index.js",
+    "#ansi-styles": "chalk/source/vendor/ansi-styles/index.js",
+    "#supports-color": "chalk/source/vendor/supports-color/index.js"
+  }
+}
+
 ### Scripts
 
 Run jest with "--experimental-vm-modules" flag. This cannot be set through `NODE_OPTS` (does not work for me), it has to be run like `node --experimental-vm-modules ./node_modules/.bin/jest`.

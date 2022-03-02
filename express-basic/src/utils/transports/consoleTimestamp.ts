@@ -1,13 +1,16 @@
 // eslint-disable-next-line node/no-unpublished-import
-import winston from "winston";
+import winston, { Logform } from "winston";
 
 const format = winston.format.combine(
   winston.format.colorize(),
-  winston.format.printf(({ timestamp, level, message }) => `${timestamp}: ${level} ${message}`)
+  winston.format.printf(
+    ({ timestamp, level, message }: Logform.TransformableInfo) =>
+      `${timestamp}: ${level} ${message}`
+  )
 );
 
 const consoleTransport = new winston.transports.Console({
-  format: format,
+  format: format
 });
 
 export default consoleTransport;

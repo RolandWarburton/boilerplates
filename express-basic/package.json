@@ -1,6 +1,7 @@
 {
   "name": "express-basic",
   "version": "1.0.0",
+  "type": "module",
   "author": "rolandwarburton <warburtonroland@gmail.com>",
   "description": "express & typescript, no database",
   "main": "dist/index.js",

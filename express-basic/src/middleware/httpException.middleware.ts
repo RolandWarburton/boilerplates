@@ -2,8 +2,11 @@
 // It uses the custom HttpException which extends the Error class with a HTTP "status" field
 
 import { Request, Response, NextFunction } from "express";
-import HttpException from "../exceptions/HttpException";
-import loggerFunction from "../utils/genericLogger";
+import HttpException from "../exceptions/HttpException.js";
+import loggerFunction from "../utils/genericLogger.js";
+import { URL } from "url";
+
+const __filename = new URL("", import.meta.url).pathname;
 const logger = loggerFunction(__filename);
 
 // in order for express to treat this as propper middleware, it requires ALL the parameters (error, req, res, next) to be passed in

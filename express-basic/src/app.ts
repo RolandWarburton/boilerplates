@@ -1,12 +1,15 @@
-import { DOMAIN, PORT, NODE_ENV } from "./constants";
+import { DOMAIN, PORT, NODE_ENV } from "./constants.js";
 import cors from "cors";
 import express, { Application, Request, Response, NextFunction } from "express";
-import Route from "./interfaces/routes.interface";
+import Route from "./interfaces/routes.interface.js";
 import { Server } from "http";
-import loggerFunction from "./utils/genericLogger";
+import loggerFunction from "./utils/genericLogger.js";
 import helmet from "helmet";
-import httpExceptionMiddleware from "./middleware/httpException.middleware";
-import errorMiddleware from "./middleware/error.middleware";
+import httpExceptionMiddleware from "./middleware/httpException.middleware.js";
+import errorMiddleware from "./middleware/error.middleware.js";
+import { URL } from "url";
+
+const __filename = new URL("", import.meta.url).pathname;
 const logger = loggerFunction(__filename);
 
 class App {

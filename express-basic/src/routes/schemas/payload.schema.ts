@@ -1,7 +1,7 @@
 // References the interface from ../../interfaces/payload.interface.ts
 
 import { JSONSchemaType } from "ajv";
-import { IPayload } from "../../interfaces/payload.interface";
+import { IPayload } from "../../interfaces/payload.interface.js";
 
 const schema: JSONSchemaType<IPayload> = {
   type: "object",
@@ -9,11 +9,11 @@ const schema: JSONSchemaType<IPayload> = {
     name: {
       type: "string",
       minLength: 1,
-      maxLength: 20,
-    },
+      maxLength: 20
+    }
   },
   required: ["name"],
-  additionalProperties: false,
+  additionalProperties: false
 };
 
 export default schema;

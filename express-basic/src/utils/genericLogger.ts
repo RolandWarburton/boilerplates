@@ -5,11 +5,11 @@
 
 /* eslint-disable node/no-unpublished-import */
 import winston, { level } from "winston";
-import consoleTransport from "./transports/console";
-import ConsoleTimestampTransport from "./transports/consoleTimestamp";
-import logLevels from "./logLevels";
+import consoleTransport from "./transports/console.js";
+import ConsoleTimestampTransport from "./transports/consoleTimestamp.js";
+import logLevels from "./logLevels.js";
 import path from "path";
-import { LOG_LEVEL, NODE_ENV } from "../constants";
+import { LOG_LEVEL, NODE_ENV } from "../constants.js";
 
 // ##──── GENERIC LOGGER ────────────────────────────────────────────────────────────────────
 
@@ -30,7 +30,7 @@ export default (filepath: string): winston.Logger => {
     // IE when we call gernericLogger.add(consoleTransport) it will add the defaultMeta as arguments to the consoleTransport
     defaultMeta: { filename: filename },
     // the highest log level to log on. when set to debug it will log everything debug and above (everything)
-    level: LOG_LEVEL as level,
+    level: LOG_LEVEL as level
   });
 
   switch (NODE_ENV) {

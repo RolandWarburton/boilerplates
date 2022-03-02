@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, RequestHandler } from "express";
 import { ValidateFunction } from "ajv";
-import HttpException from "../exceptions/HttpException";
+import HttpException from "../exceptions/HttpException.js";
 // import Ajv from "ajv/dist/core";
 
 type Value = "body" | "query" | "params";

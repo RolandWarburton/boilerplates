@@ -1,11 +1,11 @@
 import Ajv, { ValidateFunction } from "ajv";
 import { Router } from "express";
-import PayloadController from "../controllers/payload.controller";
-import Route from "../interfaces/routes.interface";
-import validateRequest from "../middleware/validateReq.middleware";
+import PayloadController from "../controllers/payload.controller.js";
+import Route from "../interfaces/routes.interface.js";
+import validateRequest from "../middleware/validateReq.middleware.js";
 import { RequestHandler } from "express";
-import schema from "./schemas/payload.schema";
-import { IPayload } from "../interfaces/payload.interface";
+import schema from "./schemas/payload.schema.js";
+import { IPayload } from "../interfaces/payload.interface.js";
 
 class PayloadRoute implements Route {
   public path = "/page";

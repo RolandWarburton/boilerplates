@@ -31,7 +31,7 @@ Uses the .js extension when importing files in src/cli.ts.
 ```js
 // src/cli.ts
 
-import { main } from "./index";
+import { main } from "./index.js";
 ```
 
 Ensure the following values are set in tsconfig.json.

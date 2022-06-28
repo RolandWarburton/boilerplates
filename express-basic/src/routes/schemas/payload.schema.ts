@@ -1,18 +1,18 @@
 // References the interface from ../../interfaces/payload.interface.ts
 
-import { JSONSchemaType } from "ajv";
-import { IPayload } from "../../interfaces/payload.interface.js";
+import { JSONSchemaType } from 'ajv';
+import { IPayload } from '../../interfaces/payload.interface.js';
 
 const schema: JSONSchemaType<IPayload> = {
-  type: "object",
+  type: 'object',
   properties: {
     name: {
-      type: "string",
+      type: 'string',
       minLength: 1,
       maxLength: 20
     }
   },
-  required: ["name"],
+  required: ['name'],
   additionalProperties: false
 };
 

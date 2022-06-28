@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response, RequestHandler } from "express";
-import { ValidateFunction } from "ajv";
-import HttpException from "../exceptions/HttpException.js";
+import { NextFunction, Request, Response, RequestHandler } from 'express';
+import { ValidateFunction } from 'ajv';
+import HttpException from '../exceptions/HttpException.js';
 // import Ajv from "ajv/dist/core";
 
-type Value = "body" | "query" | "params";
+type Value = 'body' | 'query' | 'params';
 
 // when we call this we need to tell it the type for the validate function
 // for example in user.route.ts: `validateRequest<UserRequest>("params", new Ajv().compile(mySchema);)`

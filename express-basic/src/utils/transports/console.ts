@@ -1,5 +1,4 @@
-// eslint-disable-next-line node/no-unpublished-import
-import winston from "winston";
+import winston from 'winston';
 
 const format = winston.format.combine(
   winston.format.colorize(),
@@ -7,7 +6,7 @@ const format = winston.format.combine(
 );
 
 const consoleTransport = new winston.transports.Console({
-  format: format,
+  format: format
 });
 
 export default consoleTransport;

@@ -1,14 +1,13 @@
-import Ajv, { ValidateFunction } from "ajv";
-import { Router } from "express";
-import PayloadController from "../controllers/payload.controller.js";
-import Route from "../interfaces/routes.interface.js";
-import validateRequest from "../middleware/validateReq.middleware.js";
-import { RequestHandler } from "express";
-import schema from "./schemas/payload.schema.js";
-import { IPayload } from "../interfaces/payload.interface.js";
+import Ajv, { ValidateFunction } from 'ajv';
+import { Router, RequestHandler } from 'express';
+import PayloadController from '../controllers/payload.controller.js';
+import Route from '../interfaces/routes.interface.js';
+import validateRequest from '../middleware/validateReq.middleware.js';
+import schema from './schemas/payload.schema.js';
+import { IPayload } from '../interfaces/payload.interface.js';
 
 class PayloadRoute implements Route {
-  public path = "/page";
+  public path = '/page';
   public router = Router({ strict: true });
   public controller: PayloadController;
   private validator: ValidateFunction<IPayload>;
@@ -21,7 +20,7 @@ class PayloadRoute implements Route {
   }
 
   private middleware(): RequestHandler[] {
-    return [validateRequest<IPayload>("query", this.validator)];
+    return [validateRequest<IPayload>('query', this.validator)];
   }
 
   private initializeRoutes() {

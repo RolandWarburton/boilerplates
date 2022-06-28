@@ -1,5 +1,4 @@
-// eslint-disable-next-line node/no-unpublished-import
-import winston, { Logform } from "winston";
+import winston, { Logform } from 'winston';
 
 const format = winston.format.combine(
   winston.format.colorize(),

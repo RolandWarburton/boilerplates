@@ -5,7 +5,7 @@ const logLevels = {
   http: 3,
   verbose: 4,
   debug: 5,
-  silly: 6,
+  silly: 6
 };
 
 export default logLevels;

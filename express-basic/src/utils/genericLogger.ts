@@ -3,13 +3,12 @@
  * error: 0, warn: 1, info: 2, http: 3, verbose: 4, debug: 5, silly: 6
  */
 
-/* eslint-disable node/no-unpublished-import */
-import winston, { level } from "winston";
-import consoleTransport from "./transports/console.js";
-import ConsoleTimestampTransport from "./transports/consoleTimestamp.js";
-import logLevels from "./logLevels.js";
-import path from "path";
-import { LOG_LEVEL, NODE_ENV } from "../constants.js";
+import winston, { level } from 'winston';
+import consoleTransport from './transports/console.js';
+import ConsoleTimestampTransport from './transports/consoleTimestamp.js';
+import logLevels from './logLevels.js';
+import path from 'path';
+import { LOG_LEVEL, NODE_ENV } from '../constants.js';
 
 // ##──── GENERIC LOGGER ────────────────────────────────────────────────────────────────────
 
@@ -34,22 +33,22 @@ export default (filepath: string): winston.Logger => {
   });
 
   switch (NODE_ENV) {
-    case "development":
+    case 'development':
       genericLogger.add(consoleTransport);
       break;
 
-    case "production":
+    case 'production':
       genericLogger.add(ConsoleTimestampTransport);
       break;
 
     default:
       // This is a dead (silent: true) logger that just exists as a backup if there is no transports defined
       // The purpose of this is because if we are not running in development or production (IE NODE_ENV === "test")
-      // 		Then we decide to just log nothing at all
+      //   Then we decide to just log nothing at all
       // genericLogger.add(
-      // 	new winston.transports.Console({
-      // 		silent: true,
-      // 	})
+      //   new winston.transports.Console({
+      //     silent: true,
+      //   })
       // );
       //
       // Or you can use the default console logger instead

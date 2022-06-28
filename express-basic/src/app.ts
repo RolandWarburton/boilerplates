@@ -1,26 +1,26 @@
-import { DOMAIN, PORT, NODE_ENV } from "./constants.js";
-import cors from "cors";
-import express, { Application, Request, Response, NextFunction } from "express";
-import Route from "./interfaces/routes.interface.js";
-import { Server } from "http";
-import loggerFunction from "./utils/genericLogger.js";
-import helmet from "helmet";
-import httpExceptionMiddleware from "./middleware/httpException.middleware.js";
-import errorMiddleware from "./middleware/error.middleware.js";
-import { URL } from "url";
+import { DOMAIN, PORT, NODE_ENV } from './constants.js';
+import cors from 'cors';
+import express, { Application, Request, Response, NextFunction } from 'express';
+import Route from './interfaces/routes.interface.js';
+import { Server } from 'http';
+import loggerFunction from './utils/genericLogger.js';
+import helmet from 'helmet';
+import httpExceptionMiddleware from './middleware/httpException.middleware.js';
+import errorMiddleware from './middleware/error.middleware.js';
+import { URL } from 'url';
 
-const __filename = new URL("", import.meta.url).pathname;
+const __filename = new URL('', import.meta.url).pathname;
 const logger = loggerFunction(__filename);
 
 class App {
   public app: Application;
   public port: string;
-  public env: "production" | "development";
+  public env: 'production' | 'development';
 
   constructor(routes: Route[]) {
     this.app = express();
     this.port = PORT.toString();
-    this.env = NODE_ENV as "production" | "development";
+    this.env = NODE_ENV as 'production' | 'development';
 
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
@@ -39,6 +39,7 @@ class App {
   public getServer(): express.Application {
     return this.app;
   }
+
   private initializeMiddlewares() {
     // quick and dirty logger
     this.app.use((req: Request, _: Response, next: NextFunction) => {
@@ -46,8 +47,8 @@ class App {
       next();
     });
 
-    if (this.env === "production") {
-      logger.info("running in production");
+    if (this.env === 'production') {
+      logger.info('running in production');
       this.app.use(helmet());
       this.app.use(cors({ origin: `${DOMAIN}`, credentials: true }));
     } else {
@@ -61,7 +62,7 @@ class App {
   // consume the routes and add them to the app
   private initializeRoutes(routes: Route[]) {
     routes.forEach((route) => {
-      this.app.use("/", route.router);
+      this.app.use('/', route.router);
     });
   }
 
@@ -71,8 +72,8 @@ class App {
     this.app.use(httpExceptionMiddleware);
 
     // Optionally you can enable this error middleware to catch errors of generic type Error (instead of just HTTP exceptions)
-    // 		This is possible because the httpExceptionMiddleware will pass any error on if its not a httpException
-    if (NODE_ENV == "production") {
+    // This is possible because the httpExceptionMiddleware will pass any error on if its not a httpException
+    if (NODE_ENV === 'production') {
       this.app.use(errorMiddleware);
     }
   }

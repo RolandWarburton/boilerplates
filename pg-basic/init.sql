@@ -1,0 +1,8 @@
+CREATE USER admin WITH PASSWORD 'rhinos';
+CREATE DATABASE testdb OWNER admin;
+GRANT ALL PRIVILEGES ON DATABASE testdb TO admin;
+CREATE TABLE IF NOT EXISTS test (
+  test_id serial PRIMARY KEY,
+  username VARCHAR (50) UNIQUE NOT NULL,
+  last_login TIMESTAMP
+);

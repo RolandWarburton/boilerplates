@@ -11,6 +11,8 @@ services:
       dockerfile: dockerfile
     ports:
       - 127.0.0.1:5432:5432
+    networks:
+      - pg_net
 
   adminer:
     container_name: adminer
@@ -18,6 +20,12 @@ services:
     restart: always
     ports:
       - 127.0.0.1:8080:8080
+    networks:
+      - pg_net
+
+networks:
+  pg_net:
+    external: true
 
 volumes:
   postgres:

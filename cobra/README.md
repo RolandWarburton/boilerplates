@@ -63,5 +63,5 @@ To use the code generator type your command after `cobra-cli add`.
 
 ```none
 # create a command for: `config --file`
-cobra-cli add config --file
+cobra-cli add 'config --file'
 ```

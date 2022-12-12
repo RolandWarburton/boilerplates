@@ -48,3 +48,20 @@ by defining them on the command in `inspect.go` and `reverse.go`
 
 Cobra encourages POSIX compliant way of defining commands. For example a command may contain
 `myCommand positional --arg` in which a dashed argument belongs to a positional argument.
+
+## Creating New Commands
+
+The painless way to do this is using the `cobra-cli` tool to generate new code for example commands.
+
+```none
+go install github.com/spf13/cobra-cli@latest
+```
+
+Then read the [cobra cli generator docs](https://github.com/spf13/cobra-cli/blob/main/README.md).
+
+To use the code generator type your command after `cobra-cli add`.
+
+```none
+# create a command for: `config --file`
+cobra-cli add config --file
+```

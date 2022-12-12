@@ -62,6 +62,9 @@ Then read the [cobra cli generator docs](https://github.com/spf13/cobra-cli/blob
 To use the code generator type your command after `cobra-cli add`.
 
 ```none
-# create a command for: `config --file`
-cobra-cli add 'config --file'
+# create a command for: `config`
+cobra-cli add config
 ```
+
+If you would like to add additional flags, for example to create `config --file` instead,
+then you need to add these after the running the command manually, see `inspect.go` for an example.

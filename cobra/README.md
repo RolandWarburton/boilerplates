@@ -24,7 +24,7 @@ Then copy in `cmd/`, `pkg/`, and `main.go`
 /
 ├── pkg
 │   └── .
-├── cmd
+└── cmd
     └── stringer
         ├── inspect.go
         ├── reverse.go

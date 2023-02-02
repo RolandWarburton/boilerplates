@@ -10,7 +10,7 @@ import (
 )
 
 func Conn() (*gorm.DB, error) {
-	dsn := "host=assets_db user=assets password=rhinos dbname=assets port=5432 sslmode=disable TimeZone=Etc/Utc"
+	dsn := "host=example_db user=example password=rhinos dbname=example port=5432 sslmode=disable TimeZone=Etc/Utc"
 	db, err := gorm.Open(postgres.Open(dsn),
 		&gorm.Config{
 			Logger: logger.Default.LogMode(logger.Info),

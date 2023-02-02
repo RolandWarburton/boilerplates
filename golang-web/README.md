@@ -14,7 +14,7 @@ What you get from this project is:
 
 Where to from here?
 
-Check out the `database` folder, start renaming the database name from "assets"
+Check out the `database` folder, start renaming the database name from "example"
 to something relevant for your project. You will need to hunt around for all other mentions of this
 name in all project directories unfortunately to get it all working.
 
@@ -28,8 +28,8 @@ Check `nginx/keys` and generate a private key using the provided `gen.sh`.
 Create required volume and network.
 
 ```none
-docker volume create assets_data
-docker network create assets_net
+docker volume create example_data
+docker network create example_net
 ```
 
 Build and run using compose.
@@ -66,31 +66,31 @@ http --verify=no GET https://localhost/api/v1/accounts username='roland' passwor
 ## Adminer details
 
 system: PostgreSQL \
-server: assets_db \
-username: assets \
+server: example_db \
+username: example \
 password: rhinos \
-database: assets
+database: example
 
 Or from within the database:
 
 ```none
-psql -h localhost -d assets -U assets
+psql -h localhost -d example -U example
 ```
 
 ## Development
 
-To rebuild the assets_server.
+To rebuild the example_server.
 
 ```none
-docker stop assets_server; docker-compose build assets_server; docker-compose up -d assets_server
+docker stop example_server; docker-compose build example_server; docker-compose up -d example_server
 ```
 
 To run the front end in development mode, change the `docker-compose.yaml` to target development.
 
 ```yaml
-  assets_frontend:
-    container_name: assets_frontend
-    image: assets_frontend
+  example_frontend:
+    container_name: example_frontend
+    image: example_frontend
     build:
       context: ./frontend
       # change this line
@@ -100,8 +100,8 @@ To run the front end in development mode, change the `docker-compose.yaml` to ta
 
 ## Production
 
-To run in production edit `docker-compose.yaml` and change the target for `assets_proxy`
-and `assets_frontend` to `production`. Make sure to rebuild the containers.
+To run in production edit `docker-compose.yaml` and change the target for `example_proxy`
+and `example_frontend` to `production`. Make sure to rebuild the containers.
 
 ```none
 docker-compose build && docker-compose up

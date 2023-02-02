@@ -5,7 +5,7 @@ ENV POSTGRES_USER superadmin
 ENV POSTGRES_PASSWORD docker
 
 # default DB
-ENV POSTGRES_DB assets
+ENV POSTGRES_DB example
 
 # copy the init script over to create a production db
 COPY init.sql /docker-entrypoint-initdb.d/

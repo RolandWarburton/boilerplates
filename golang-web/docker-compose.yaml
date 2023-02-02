@@ -1,32 +1,32 @@
 version: "3.4"
 services:
 
-  assets_proxy:
-    container_name: assets_proxy
-    image: assets_proxy
+  example_proxy:
+    container_name: example_proxy
+    image: example_proxy
     build:
       context: ./nginx
       dockerfile: dockerfile
       target: production
       args:
-        - ASSETS_API_PORT=${ASSETS_API_PORT}
+        - EXAMPLE_API_PORT=${EXAMPLE_API_PORT}
     ports:
       - "443:443"
       - "80:80"
     environment:
-      - ASSETS_API_PORT=${ASSETS_API_PORT}
+      - EXAMPLE_API_PORT=${EXAMPLE_API_PORT}
     expose:
       - "443"
       - "80"
     restart: unless-stopped
     networks:
-      - assets_net
+      - example_net
     volumes:
       - ./nginx/keys:/keys
 
-  assets_server:
-    container_name: assets_server
-    image: assets_server
+  example_server:
+    container_name: example_server
+    image: example_server
     build:
       context: ./backend
       dockerfile: dockerfile
@@ -36,10 +36,10 @@ services:
       - "3000"
     restart: unless-stopped
     networks:
-      - assets_net
+      - example_net
 
-  assets_db:
-    container_name: assets_db
+  example_db:
+    container_name: example_db
     image: postgres_db
     restart: always
     build:
@@ -50,9 +50,9 @@ services:
     expose:
       - "5432"
     networks:
-      - assets_net
+      - example_net
     volumes:
-      - assets_data:/var/lib/postgresql
+      - example_data:/var/lib/postgresql
 
   adminer:
     container_name: adminer
@@ -61,11 +61,11 @@ services:
     ports:
       - 127.0.0.1:8080:8080
     networks:
-      - assets_net
+      - example_net
 
-  assets_frontend:
-    container_name: assets_frontend
-    image: assets_frontend
+  example_frontend:
+    container_name: example_frontend
+    image: example_frontend
     build:
       context: ./frontend
       target: development
@@ -76,14 +76,14 @@ services:
       - "3001"
     restart: unless-stopped
     networks:
-      - assets_net
+      - example_net
     volumes:
       - ./frontend/src:/app/src
 
 
 networks:
-  assets_net:
+  example_net:
     external: true
 
 volumes:
-  assets_data:
+  example_data:

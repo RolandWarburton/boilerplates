@@ -1,5 +1,5 @@
-CREATE USER assets WITH PASSWORD 'rhinos';
-GRANT ALL PRIVILEGES ON DATABASE assets TO assets;
+CREATE USER example WITH PASSWORD 'rhinos';
+GRANT ALL PRIVILEGES ON DATABASE example TO example;
 
 CREATE TABLE accounts (
   ID uuid DEFAULT gen_random_uuid(),
@@ -11,4 +11,4 @@ CREATE TABLE accounts (
   PRIMARY KEY(ID)
 );
 
-ALTER TABLE accounts OWNER TO assets;
+ALTER TABLE accounts OWNER TO example;

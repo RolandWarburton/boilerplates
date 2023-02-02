@@ -15,7 +15,7 @@ function Form() {
       },
       body: JSON.stringify({
         username: values.username,
-        password: values.password,
+        password: btoa(`${values.username}:${values.password}`),
         is_staff: values.is_staff
       })
     });

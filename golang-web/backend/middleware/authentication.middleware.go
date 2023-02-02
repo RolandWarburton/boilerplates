@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	assets_utils "github.com/rolandwarburton/gomvc/utils"
+	example_utils "github.com/rolandwarburton/gomvc/utils"
 )
 
 func CheckAuth() gin.HandlerFunc {
@@ -37,7 +37,7 @@ func CheckAuth() gin.HandlerFunc {
 		}
 
 		// parts[1] is the obtained tokenString
-		mc, err := assets_utils.ParseToken(parts[1])
+		mc, err := example_utils.ParseToken(parts[1])
 		if err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"code":    205,

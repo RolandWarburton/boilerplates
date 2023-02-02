@@ -35,10 +35,10 @@ COPY ./sites-available/. /etc/nginx/sites-available/
 RUN ln -s /etc/nginx/sites-available/* /etc/nginx/sites-enabled/
 
 # These env vars will be used to configure nginx
-ARG ASSETS_API_PORT
-ENV ASSETS_API_PORT $ASSETS_API_PORT
-RUN echo "ASSETS_API_PORT=$ASSETS_API_PORT"
-RUN find /etc/nginx/locations -type f -exec sed -i "s/\${ASSETS_API_PORT}/$ASSETS_API_PORT/g" {} \;
+ARG EXAMPLE_API_PORT
+ENV EXAMPLE_API_PORT $EXAMPLE_API_PORT
+RUN echo "EXAMPLE_API_PORT=$EXAMPLE_API_PORT"
+RUN find /etc/nginx/locations -type f -exec sed -i "s/\${EXAMPLE_API_PORT}/$EXAMPLE_API_PORT/g" {} \;
 
 # DEVELOPMENT ======================================================================================
 FROM common as development

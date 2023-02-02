@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	database "github.com/rolandwarburton/gomvc/models"
 	"github.com/rolandwarburton/gomvc/services"
-	assets_utils "github.com/rolandwarburton/gomvc/utils"
+	example_utils "github.com/rolandwarburton/gomvc/utils"
 	"gorm.io/gorm"
 )
 
@@ -56,7 +56,7 @@ func (controller AuthController) Authenticate(c *gin.Context) {
 	}
 
 	// Generate Token
-	tokenString, _ := assets_utils.GenToken(user.Username)
+	tokenString, _ := example_utils.GenToken(user.Username)
 	c.JSON(http.StatusOK, gin.H{
 		"code":    200,
 		"message": "success",

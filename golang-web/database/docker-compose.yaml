@@ -2,8 +2,8 @@
 version: '3.1'
 
 services:
-  assets_db:
-    container_name: assets
+  example_db:
+    container_name: example
     image: postgres_db
     restart: always
     build:
@@ -14,9 +14,9 @@ services:
     expose:
       - "3000"
     networks:
-      - assets_net
+      - example_net
     volumes:
-      - assets_data:/var/lib/postgresql
+      - example_data:/var/lib/postgresql
 
   adminer:
     container_name: adminer
@@ -25,11 +25,11 @@ services:
     ports:
       - 127.0.0.1:8080:8080
     networks:
-      - assets_net
+      - example_net
 
 networks:
-  assets_net:
+  example_net:
     external: true
 
 volumes:
-  assets_data:
+  example_data:

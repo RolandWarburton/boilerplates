@@ -1,4 +1,4 @@
-package assets_utils
+package example_utils
 
 import (
 	"errors"

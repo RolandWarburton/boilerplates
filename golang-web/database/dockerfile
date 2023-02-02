@@ -1,0 +1,11 @@
+FROM postgres
+
+# superuser password
+ENV POSTGRES_USER superadmin
+ENV POSTGRES_PASSWORD docker
+
+# default DB
+ENV POSTGRES_DB assets
+
+# copy the init script over to create a production db
+COPY init.sql /docker-entrypoint-initdb.d/

@@ -1,0 +1,89 @@
+version: "3.4"
+services:
+
+  assets_proxy:
+    container_name: assets_proxy
+    image: assets_proxy
+    build:
+      context: ./nginx
+      dockerfile: dockerfile
+      target: production
+      args:
+        - ASSETS_API_PORT=${ASSETS_API_PORT}
+    ports:
+      - "443:443"
+      - "80:80"
+    environment:
+      - ASSETS_API_PORT=${ASSETS_API_PORT}
+    expose:
+      - "443"
+      - "80"
+    restart: unless-stopped
+    networks:
+      - assets_net
+    volumes:
+      - ./nginx/keys:/keys
+
+  assets_server:
+    container_name: assets_server
+    image: assets_server
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    restart: unless-stopped
+    networks:
+      - assets_net
+
+  assets_db:
+    container_name: assets_db
+    image: postgres_db
+    restart: always
+    build:
+      context: ./database
+      dockerfile: dockerfile
+    ports:
+      - 127.0.0.1:5432:5432
+    expose:
+      - "5432"
+    networks:
+      - assets_net
+    volumes:
+      - assets_data:/var/lib/postgresql
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    ports:
+      - 127.0.0.1:8080:8080
+    networks:
+      - assets_net
+
+  assets_frontend:
+    container_name: assets_frontend
+    image: assets_frontend
+    build:
+      context: ./frontend
+      target: development
+      dockerfile: dockerfile
+    ports:
+      - "3001:3001"
+    expose:
+      - "3001"
+    restart: unless-stopped
+    networks:
+      - assets_net
+    volumes:
+      - ./frontend/src:/app/src
+
+
+networks:
+  assets_net:
+    external: true
+
+volumes:
+  assets_data:

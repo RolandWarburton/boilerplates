@@ -1,0 +1,35 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+  assets_db:
+    container_name: assets
+    image: postgres_db
+    restart: always
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - 0.0.0.0:5432:5432
+    expose:
+      - "3000"
+    networks:
+      - assets_net
+    volumes:
+      - assets_data:/var/lib/postgresql
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    ports:
+      - 127.0.0.1:8080:8080
+    networks:
+      - assets_net
+
+networks:
+  assets_net:
+    external: true
+
+volumes:
+  assets_data:

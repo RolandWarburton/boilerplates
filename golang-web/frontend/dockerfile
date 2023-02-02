@@ -1,0 +1,28 @@
+FROM node:16 as build_stage
+
+# Create app directory
+RUN mkdir -p /app
+RUN mkdir -p /app/public
+RUN mkdir -p /app/src
+WORKDIR /app
+
+# Install dependencies for backend gateway
+COPY ./package* /app/
+RUN npm install
+
+# Bundle app source
+# COPY ./src/. /app/src/
+# COPY ./public/. /app/public/
+COPY . /app
+
+# Exports
+EXPOSE 3001
+
+ENV port=443
+
+FROM build_stage as development
+CMD [ "npm", "run", "start" ]
+
+FROM build_stage as production
+RUN npm run build
+CMD [ "npx", "serve", "-s", "build", "-p", "3001" ]

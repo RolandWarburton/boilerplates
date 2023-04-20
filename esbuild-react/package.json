@@ -1,0 +1,32 @@
+{
+  "type": "module",
+  "dependencies": {
+    "eslint": "^8.38.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "esbuild": "0.17.16",
+    "eslint-config-standard-with-typescript": "^34.0.1",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.32.2",
+    "typescript": "^5.0.4"
+  },
+  "name": "esbuild-react-boilerplate",
+  "version": "1.0.0",
+  "main": "src/index.tsx",
+  "scripts": {
+    "copy_index": "cp src/index.html ./dist",
+    "build": "npm run copy_index && node ./scripts/build.js",
+    "watch": "npm run copy_index && node ./scripts/watch.js --bundle --watch",
+    "lint": "eslint ./src --config .eslintrc.js --ext .tsx"
+  },
+  "author": "Roland Warburton",
+  "license": "ISC",
+  "description": ""
+}

@@ -2,7 +2,7 @@
 
 Slightly more useful compared to cli-basic-js.
 
-## Intsalling
+## Installing
 
 ```none
 npm i

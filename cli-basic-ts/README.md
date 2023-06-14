@@ -5,6 +5,7 @@ Slightly more useful compared to cli-basic-js.
 ## Intsalling
 
 ```none
-npm i && \
+npm i
+npm run build
 npm link
 ```

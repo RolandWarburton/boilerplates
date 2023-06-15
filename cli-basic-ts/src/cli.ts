@@ -1,11 +1,21 @@
-import yargs from "yargs";
-import { hideBin } from "yargs/helpers";
-import { main } from "./index";
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import { main } from './index';
+
+interface ArgsOptions {
+  name?: string;
+}
 
 export async function cli(processArgs: any) {
-  const args = yargs(hideBin(processArgs)).command("--name <string>", "The user's name").parse();
+  const argv = await yargs(hideBin(processArgs)).option('name', {
+    alias: 'n',
+    description: "The user's name",
+    type: 'string'
+  }).argv;
 
-  let config = {};
+  let config: ArgsOptions = {
+    name: argv.name || 'hello'
+  };
 
   await main(config);
 }

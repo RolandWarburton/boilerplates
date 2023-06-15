@@ -1,14 +1,20 @@
 #!/usr/bin/env node
 
-require("../dist/cli").cli(process.argv);
+const { cli } = require('../dist/cli');
 
-// wait for input before closing
-console.log('press any key to continue')
-process.stdin.setRawMode(true);
-process.stdin.resume();
+async function run() {
+  await cli(process.argv);
 
-process.stdin.once('data', () => {
-  process.stdin.setRawMode(false);
-  console.log('Closing...');
-  process.exit(0);
-});
+  // wait for input before closing
+  console.log('press any key to continue');
+  process.stdin.setRawMode(true);
+  process.stdin.resume();
+
+  process.stdin.once('data', () => {
+    process.stdin.setRawMode(false);
+    console.log('Closing...');
+    process.exit(0);
+  });
+}
+
+run();

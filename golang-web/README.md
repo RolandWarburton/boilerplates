@@ -26,6 +26,7 @@ how routes call controller methods, and where middleware is exists.
 Check `nginx/keys` and generate a private key using the provided `gen.sh`.
 
 Create required volume and network.
+You can rename the examples in `docker-compose.yaml` to target the correct names.
 
 ```none
 docker volume create example_data

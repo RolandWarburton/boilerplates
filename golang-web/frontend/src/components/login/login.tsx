@@ -10,8 +10,6 @@ function Login() {
       password: btoa(`${username}:${password}`)
     });
 
-    console.log(btoa('password'))
-
     const url = `${PROTOCOL}://${DOMAIN}:${API_PORT}/${API_ROOT}/auth`;
     const req = await fetch(url, {
       method: 'POST',

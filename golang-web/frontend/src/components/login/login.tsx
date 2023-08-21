@@ -6,7 +6,7 @@ function Login() {
   const [password, setPassword] = React.useState('');
   const handleLogin = async () => {
     const payload = JSON.stringify({
-      username: username,
+      username,
       password: btoa(`${username}:${password}`)
     });
 

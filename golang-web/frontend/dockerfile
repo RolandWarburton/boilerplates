@@ -1,28 +1,44 @@
-FROM node:16 as build_stage
-
-# Create app directory
+FROM node:18.17.1-slim as base
+# ENV PNPM_HOME="/home/roland/.local/share/pnpm/store/v3"
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 RUN mkdir -p /app
 RUN mkdir -p /app/public
 RUN mkdir -p /app/src
 WORKDIR /app
-
-# Install dependencies for backend gateway
 COPY ./package* /app/
-RUN npm install
+COPY . /app
+
+FROM base AS prod_deps
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+
+FROM base AS dev_deps
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
+FROM base as build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN pnpm run build
+
+FROM base as production
+COPY --from=prod_deps /app/node_modules /app/node_modules
+COPY --from=build /app/build /app/dist
+
+from base as development
+COPY --from=dev_deps /app/node_modules /app/node_modules
+EXPOSE 3001
+ENV port=443
+CMD [ "pnpm", "start" ]
+
+# ---
 
 # Bundle app source
 # COPY ./src/. /app/src/
 # COPY ./public/. /app/public/
-COPY . /app
 
-# Exports
-EXPOSE 3001
-
-ENV port=443
-
-FROM build_stage as development
-CMD [ "npm", "run", "start" ]
-
-FROM build_stage as production
-RUN npm run build
-CMD [ "npx", "serve", "-s", "build", "-p", "3001" ]
+# FROM build_stage as development
+# CMD [ "npm", "run", "start" ]
+#
+# FROM build_stage as production
+# RUN npm run build
+# CMD [ "npx", "serve", "-s", "build", "-p", "3001" ]

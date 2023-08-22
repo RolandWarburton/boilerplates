@@ -66,8 +66,14 @@ func main() {
 	route.Register("GET", v1, accountController.GetAccountQuery)
 
 	// create a server
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+
+	addr := fmt.Sprintf("0.0.0.0:%s", port)
 	srv := &http.Server{
-		Addr:    "0.0.0.0:3000",
+		Addr:    addr,
 		Handler: router,
 	}
 

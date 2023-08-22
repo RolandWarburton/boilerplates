@@ -80,11 +80,9 @@ async function main() {
       process.exit(1);
     });
     result.serve({
-      port: 8000,
+      port: parseInt(process.env.PORT) || 8000,
       servedir: 'build',
-      host: '0.0.0.0',
-      keyfile: '../nginx/keys/privkey.pem',
-      certfile: '../nginx/keys/fullchain.pem'
+      host: '0.0.0.0'
     });
     await result.watch();
     console.log('watching...');

@@ -2,7 +2,7 @@ import React from 'react';
 import Component from '../../pages/home';
 
 function Home() {
-  return <Component></Component>;
+  return <Component />;
 }
 
 export default Home;

@@ -8,6 +8,13 @@ docker network create example_net
 docker-compose build && docker-compose up
 ```
 
+See `init.sql` for the following details.
+
+* server: example_db
+* username: example
+* password: see `init.sql`
+* database: example
+
 Connect to the database.
 
 ```none

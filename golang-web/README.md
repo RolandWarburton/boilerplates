@@ -44,24 +44,24 @@ docker-compose up
 
 To obtain an auth token for development purposes you can use a HTTP client and POST to `/auth`.
 
-For example using [httpie](https://httpie.io/)
-and its [jwt plugin](https://github.com/teracyhq/httpie-jwt-auth) you can do a request as follows.
+For example using curl.
 
 ```none
-http -j POST 'localhost:3000/auth' 'username=roland' 'password=password' 
+curl -X POST "http://localhost:3000/auth" \
+    -H "Content-Type: application/json" \
+    -d '{"username":"roland","password":"sha256_of_password"}'
 ```
 
 You can then re-use that token later.
 
 ```none
 using the auth type jwt via the exposed api
-http --auth-type=jwt --auth='<TOKEN>' 'localhost:3000/accounts'
+curl "http://localhost:3000/accounts" \
+    -H "Authorization: Bearer $TOKEN"
 
 or going through the gateway
-http --auth-type=jwt --auth="$TOKEN" --verify=no https://localhost/api/v1/accounts
-
-or without using the auth type jwt through the gateway
-http --verify=no GET https://localhost/api/v1/accounts username='roland' password='password' Authorization:"Bearer $TOKEN"
+curl --insecure "https://localhost/api/v1/accounts" \
+    -H "Authorization: Bearer $TOKEN"
 ```
 
 ## Adminer details

@@ -15,7 +15,6 @@ func CheckAuth() gin.HandlerFunc {
 		// Here, it is assumed that the Token is placed in the Authorization of the Header and starts with Bearer
 		// The specific implementation method here should be determined according to your actual business situation
 		authHeader := c.Request.Header.Get("Authorization")
-		fmt.Println(authHeader)
 		if authHeader == "" {
 			c.JSON(http.StatusOK, gin.H{
 				"code":    203,

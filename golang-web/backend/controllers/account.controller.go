@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"regexp"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rolandwarburton/gomvc/errors"
@@ -40,7 +41,20 @@ func (controller AccountController) PostAccount(c *gin.Context) {
 		return
 	}
 
-	// do something with it
+	// check that the password is hashed correctly
+	pattern := "^[a-fA-F0-9]{64}$"
+	regex := regexp.MustCompile(pattern)
+	if !regex.MatchString(body.Password) {
+		err := errors.RestError{
+			Message: "password was not hashed correctly.",
+			Status:  http.StatusBadRequest,
+			Error:   "",
+		}
+		c.AbortWithStatusJSON(http.StatusBadRequest, err)
+		return
+	}
+
+	// do something with the account body
 	res, err := services.PostAccount(controller.DB, &body)
 	if err != nil {
 		c.AbortWithStatusJSON(err.Status, err)

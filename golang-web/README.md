@@ -21,7 +21,13 @@ name in all project directories unfortunately to get it all working.
 Check out the `backend` folder, learn how a route is created from the factory pattern,
 how routes call controller methods, and where middleware is exists.
 
-## Getting Started
+## Getting Started - Building
+
+Make sure you are using the new buildkit.
+
+```none
+export DOCKER_BUILDKIT=1
+```
 
 Check `nginx/keys` and generate a private key using the provided `gen.sh`.
 
@@ -40,42 +46,50 @@ docker-compose build && \
 docker-compose up
 ```
 
+## Accessing The Database Web UI
+
+Adminer is used to expose a web UI for the database.
+
+Read database/README.md to see information about how to connect to the database.
+
 ## Login (auth tokens)
+
+When the database is run, init.sql will create some accounts.
+See `database/init.sql` to see details about them.
+
+To get a SHA of your password you can use this snippet.
+
+```none
+echo 'MYPASSWORD' | sha256sum | cut -d '-' -f1 | xargs
+```
 
 To obtain an auth token for development purposes you can use a HTTP client and POST to `/auth`.
 
 For example using curl.
 
 ```none
-curl -X POST "http://localhost:3000/auth" \
+TOKEN=$(curl -X POST "http://localhost:3000/auth" \
     -H "Content-Type: application/json" \
-    -d '{"username":"roland","password":"sha256_of_password"}'
+    -d '{"username":"roland","password":"sha256_of_password"}' | jq -r '.data.token')
 ```
 
 You can then re-use that token later.
 
-```none
-using the auth type jwt via the exposed api
-curl "http://localhost:3000/accounts" \
-    -H "Authorization: Bearer $TOKEN"
 
-or going through the gateway
-curl --insecure "https://localhost/api/v1/accounts" \
-    -H "Authorization: Bearer $TOKEN"
+Create a `HEADERS` variable for ease of use later.
+
+```bash
+HEADERS=$(echo "Authorization: Bearer $TOKEN") 
+# when used in curl:
+# curl http:website -H "Authorization: Bearer $TOKEN"
 ```
 
-## Adminer details
-
-system: PostgreSQL \
-server: example_db \
-username: example \
-password: rhinos \
-database: example
-
-Or from within the database:
-
 ```none
-psql -h localhost -d example -U example
+using the auth type jwt via the exposed api
+curl -H $HEADERS "http://localhost:3000/accounts"
+
+or going through the gateway
+curl --insecure -H $HEADERS "https://localhost/api/v1/accounts"
 ```
 
 ## Development
@@ -83,7 +97,9 @@ psql -h localhost -d example -U example
 To rebuild the example_server.
 
 ```none
-docker stop example_server; docker-compose build example_server; docker-compose up -d example_server
+docker stop example_server; \
+docker-compose build example_server; \
+docker-compose up -d example_server
 ```
 
 To run the front end in development mode, change the `docker-compose.yaml` to target development.

@@ -8,6 +8,8 @@ docker network create example_net
 docker-compose build && docker-compose up
 ```
 
+By default Adminer can be found at [localhost:8080](http://localhost:8080).
+
 See `init.sql` for the following details.
 
 * server: example_db

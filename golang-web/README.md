@@ -57,6 +57,7 @@ Read database/README.md to see information about how to connect to the database.
 When the database is run, init.sql will create some accounts.
 See `database/init.sql` to see details about them.
 
+Passwords are hashed when they are sent to the server.
 To get a SHA of your password you can use this snippet.
 
 ```none
@@ -72,7 +73,7 @@ curl -X POST "http://localhost:3000/auth" \
     -d '{"username":"roland","password":"sha256_of_password"}' | jq -r '.data.token'
 ```
 
-You can then re-use that token later.
+You can then re-use that token later for future requests.
 
 The above has been simplified into a script to set a token variable.
 Running `eval $(node getToken.js)` will result in

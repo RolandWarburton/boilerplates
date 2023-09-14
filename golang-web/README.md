@@ -60,35 +60,32 @@ See `database/init.sql` to see details about them.
 To get a SHA of your password you can use this snippet.
 
 ```none
-echo 'MYPASSWORD' | sha256sum | cut -d '-' -f1 | xargs
+printf 'MYPASSWORD' | sha256sum | cut -d '-' -f1 | xargs
 ```
 
-To obtain an auth token for development purposes you can use a HTTP client and POST to `/auth`.
-
-For example using curl.
+To obtain an auth token (JWT) for development purposes
+you can use a HTTP client and POST to `/auth`.
 
 ```none
-TOKEN=$(curl -X POST "http://localhost:3000/auth" \
+curl -X POST "http://localhost:3000/auth" \
     -H "Content-Type: application/json" \
-    -d '{"username":"roland","password":"sha256_of_password"}' | jq -r '.data.token')
+    -d '{"username":"roland","password":"sha256_of_password"}' | jq -r '.data.token'
 ```
 
 You can then re-use that token later.
 
-
-Create a `HEADERS` variable for ease of use later.
+The above has been simplified into a script to set a token variable.
+Running `eval $(node getToken.js)` will result in
+`$TOKEN` (the JWT) and `$HEADERS` (the auth bearer string) being set.
 
 ```bash
-HEADERS=$(echo "Authorization: Bearer $TOKEN") 
-# when used in curl:
-# curl http:website -H "Authorization: Bearer $TOKEN"
-```
+# get a token for requests
+eval $(node getToken.js)
 
-```none
-using the auth type jwt via the exposed api
-curl -H $HEADERS "http://localhost:3000/accounts"
+#using the auth type jwt via the exposed api
+curl -H $HEADERS "http://localhost:3001/accounts"
 
-or going through the gateway
+#or going through the gateway
 curl --insecure -H $HEADERS "https://localhost/api/v1/accounts"
 ```
 

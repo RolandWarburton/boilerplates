@@ -17,9 +17,9 @@ ALTER TABLE accounts OWNER TO example;
 
 -- password is rhinos
 INSERT INTO accounts (username, password, is_staff)
-VALUES ('roland', '3de2d77d30ef46859f5a088a6c888105e66e97473a09467d02a996f879efa118', TRUE);
+VALUES ('roland', 'aa342a6b087d9fe25e96457873ca611b35158223281c1985a11cf9ad26f89ec0', TRUE);
 
 -- password is duck
 INSERT INTO accounts (username, password, is_staff)
-VALUES ('rinne', '5189148bef66f4743a8214f0c990adb2fd7661a1990c74c82bece4f8421b1631', TRUE);
+VALUES ('rinne', '2d2370db2447ff8cf4f3accd68c85aa119a9c893effd200a9b69176e9fc5eb98', TRUE);
 

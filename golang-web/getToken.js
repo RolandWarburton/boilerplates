@@ -25,8 +25,9 @@ fetch('http://localhost:3000/auth', {
   .then((data) => {
     let evalString = '';
     evalString += `export TOKEN=${data.data.token};`;
-    evalString += 'echo "set token successfully";';
-    evalString += `export HEADERS="Authorization: Bearer ${data.data.token}"`;
+    evalString += 'echo "set TOKEN successfully";';
+    evalString += `export HEADERS="Authorization: Bearer ${data.data.token}";`;
+    evalString += 'echo "set HEADERS successfully";';
     process.stdout.write(evalString);
   })
   .catch(() => {

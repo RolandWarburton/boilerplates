@@ -31,11 +31,11 @@ services:
       context: ./backend
       dockerfile: dockerfile
     environment:
-      - PORT=3000
+      - PORT=${EXAMPLE_API_PORT}
     ports:
-      - "3000:3000"
+      - "${EXAMPLE_API_PORT}:${EXAMPLE_API_PORT}"
     expose:
-      - "3000"
+      - "${EXAMPLE_API_PORT}"
     restart: unless-stopped
     networks:
       - example_net
@@ -73,11 +73,11 @@ services:
       target: development
       dockerfile: dockerfile
     environment:
-      - PORT=3001
+      - PORT=${EXAMPLE_FRONTEND_PORT}
     ports:
-      - "3001:3001"
+      - "${EXAMPLE_FRONTEND_PORT}:${EXAMPLE_FRONTEND_PORT}"
     expose:
-      - "3001"
+      - "${EXAMPLE_FRONTEND_PORT}"
     restart: unless-stopped
     networks:
       - example_net

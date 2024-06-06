@@ -7,10 +7,6 @@ type Inputs = {
   age: number;
 };
 
-function submit(data: Inputs) {
-  console.log(data);
-}
-
 const defaultValues = {
   name: 'roland',
   age: 0
@@ -29,14 +25,8 @@ function getSettings(): Promise<Inputs> {
   });
 }
 
-function setDefaultSettings(setFunc: React.Dispatch<Inputs>) {
-  chrome.storage.local.set({ settings: defaultValues }, () => {
-    setFunc(defaultValues);
-  });
-}
-
 function OptionsForm() {
-  const [settings, setSettings] = useState<undefined | Inputs>(undefined);
+  const [formLoaded, setFormLoaded] = useState<boolean>(false);
 
   const {
     register,
@@ -49,30 +39,31 @@ function OptionsForm() {
   });
 
   useEffect(() => {
+    // convert a type {name: string, age: number} to a union "name" | "number"
+    type InputProperties = keyof Inputs;
     const doAsync = async () => {
-      const settings = await getSettings();
-      console.log(settings);
+      // read the settings from the browser storage
+      let settings = await getSettings();
       if (settings == undefined) {
-        setDefaultSettings(setSettings);
-      } else {
-        setSettings(settings);
-        for (const o of Object.keys(settings)) {
-          setValue(o, settings[o]);
-        }
+        settings = defaultValues;
       }
+      // and set the form values
+      for (const o of Object.keys(settings)) {
+        setValue(o as InputProperties, settings[o as InputProperties]);
+      }
+      setFormLoaded(true);
     };
     doAsync();
   }, []);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     chrome.storage.local.set({ settings: data }, () => {
-      setSettings(data);
+      console.log(data);
     });
-    submit(data);
   };
   console.log(watch('name'));
 
-  if (settings == undefined) {
+  if (formLoaded == false) {
     return <div>loading</div>;
   }
 
@@ -90,7 +81,6 @@ function OptionsForm() {
         {errors.age && <span>{errors.age.type}</span>}
         <input type="submit" />
       </form>
-      {JSON.stringify(settings)}
     </div>
   );
 }

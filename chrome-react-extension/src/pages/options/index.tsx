@@ -1,8 +1,13 @@
-import React from 'react'
-import { OptionsForm } from '../../forms/options'
+import { Container } from 'components/containers';
+import { OptionsForm } from 'forms/options';
+import React from 'react';
 
 const Options = () => {
-  return <div><OptionsForm /></div>
-}
+  return (
+    <Container>
+      <OptionsForm />
+    </Container>
+  );
+};
 
-export { Options }
+export { Options };

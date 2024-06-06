@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { Input } from '../../components/forms';
 // import { Input } from '@mui/material';
 // import { Input } from '@material-ui/core';
@@ -18,7 +18,6 @@ function OptionsForm() {
     register,
     handleSubmit,
     watch,
-    control,
     formState: { errors }
   } = useForm<Inputs>({
     defaultValues: {
@@ -35,14 +34,19 @@ function OptionsForm() {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input type="number" {...register('name', { required: 'required field here' })} />
-        {errors.name?.message}
-        {errors.name && <span> this field is required ({errors.name.type}) </span>}
+        {/* example of passing the error in */}
+        <Input
+          type="text"
+          error={errors.name}
+          {...register('name', { required: 'required field here', minLength: 1 })}
+        />
+        {/* example of error text being seperate from the form Input*/}
+        <Input type="number" {...register('age', { required: 'required field here', min: 18 })} />
+        {errors.age && <span>{errors.age.type}</span>}
         <input type="submit" />
       </form>
     </div>
   );
-  // <Input {...register('name', { required: 'required field here' })} />
 }
 
 export { OptionsForm };

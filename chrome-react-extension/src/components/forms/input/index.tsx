@@ -1,7 +1,6 @@
 import React from 'react';
-// import { Control, Controller, ControllerRenderProps, FieldPath, FieldValues } from 'react-hook-form'
 import { Input as MUIInput } from '@mui/material';
-import { UseFormRegister } from 'react-hook-form';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 
 type Inputs = {
   name: string;
@@ -10,13 +9,16 @@ type Inputs = {
 
 interface InputProps extends ReturnType<UseFormRegister<Inputs>> {
   type: string;
+  error?: FieldError | undefined;
 }
 
-const input = React.forwardRef<HTMLInputElement, InputProps>(
-function Input(field, ref) {
+const input = React.forwardRef<HTMLInputElement, InputProps>(function Input(props, ref) {
+  const { name, onBlur, onChange, type, error } = props;
+  const fieldValues = { name, onBlur, onChange, type };
   return (
     <>
-      <MUIInput {...field} ref={ref} />
+      <MUIInput {...fieldValues} ref={ref} />
+      {error && <span>{error.type}</span>}
     </>
   );
 });

@@ -1,8 +1,14 @@
-import React from 'react'
-import { OptionsButton } from '../../components/settingsButton'
+import React from 'react';
+import { OptionsButton } from 'components/settingsButton';
+import { Container } from 'components/containers';
 
 const App = () => {
-  return <div>app<OptionsButton /></div>
-}
+  return (
+    <Container>
+      app
+      <OptionsButton />
+    </Container>
+  );
+};
 
-export { App }
+export { App };

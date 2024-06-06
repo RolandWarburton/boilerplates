@@ -1,8 +1,6 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Input } from '../../components/forms';
-// import { Input } from '@mui/material';
-// import { Input } from '@material-ui/core';
 
 type Inputs = {
   name: string;

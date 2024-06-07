@@ -60,6 +60,7 @@ async function main() {
   fs.copyFileSync('manifest.json', 'dist/manifest.json');
   fs.copyFileSync('./static/popup.html', './dist/popup.html');
   fs.copyFileSync('./static/options.html', './dist/options.html');
+  fs.copyFileSync('./static/styles.css', './dist/styles.css');
   copyFolderSync('./images/', './dist/images');
 }
 main();

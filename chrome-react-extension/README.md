@@ -34,5 +34,9 @@ It consists of a "popup" dialog which appears in the dropdown in the chrome navi
 |                                        |
 |                                        |
 +----------------------------------------+
-
 ```
+
+## Chrome Local Storage
+
+Consider using a chrome plugin to view the local storage (eg settings) of your plugin.
+[link](https://chromewebstore.google.com/detail/storage-area-explorer/ocfjjjjhkpapocigimmppepjgfdecjkb)

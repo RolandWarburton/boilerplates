@@ -1,22 +1,22 @@
-const fs = require('fs');
-const path = require('path');
-const { build: esbuild } = require('esbuild');
+import { existsSync, mkdirSync, readdirSync, statSync, copyFileSync, writeFileSync } from 'fs';
+import { join } from 'path';
+import { build as esbuild } from 'esbuild';
 
 function copyFolderSync(source, target) {
-  if (!fs.existsSync(target)) {
-    fs.mkdirSync(target);
+  if (!existsSync(target)) {
+    mkdirSync(target);
   }
 
-  const files = fs.readdirSync(source);
+  const files = readdirSync(source);
 
   files.forEach((file) => {
-    const sourcePath = path.join(source, file);
-    const targetPath = path.join(target, file);
+    const sourcePath = join(source, file);
+    const targetPath = join(target, file);
 
-    const stats = fs.statSync(sourcePath);
+    const stats = statSync(sourcePath);
 
     if (stats.isFile()) {
-      fs.copyFileSync(sourcePath, targetPath);
+      copyFileSync(sourcePath, targetPath);
     } else if (stats.isDirectory()) {
       copyFolderSync(sourcePath, targetPath);
     }
@@ -24,8 +24,8 @@ function copyFolderSync(source, target) {
 }
 
 function makeTemp(name) {
-  if (!fs.existsSync(`./${name}`)) {
-    fs.mkdirSync(`./${name}`);
+  if (!existsSync(`./${name}`)) {
+    mkdirSync(`./${name}`);
   }
 }
 
@@ -59,14 +59,14 @@ async function main() {
 
   let content = '';
   content = result.outputFiles[0].text;
-  fs.writeFileSync('dist/index.js', content);
+  writeFileSync('dist/index.js', content);
   content = result.outputFiles[1].text;
-  fs.writeFileSync('dist/options.js', content);
+  writeFileSync('dist/options.js', content);
 
-  fs.copyFileSync('manifest.json', 'dist/manifest.json');
-  fs.copyFileSync('./static/popup.html', './dist/popup.html');
-  fs.copyFileSync('./static/options.html', './dist/options.html');
-  fs.copyFileSync('./static/styles.css', './dist/styles.css');
+  copyFileSync('manifest.json', 'dist/manifest.json');
+  copyFileSync('./static/popup.html', './dist/popup.html');
+  copyFileSync('./static/options.html', './dist/options.html');
+  copyFileSync('./static/styles.css', './dist/styles.css');
   copyFolderSync('./images/', './dist/images');
 }
 main();

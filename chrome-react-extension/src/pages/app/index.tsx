@@ -1,6 +1,6 @@
 import React from 'react';
-import { OptionsButton } from 'components/settingsButton';
-import { Container } from 'components/containers';
+import { OptionsButton } from '@components/settingsButton';
+import { Container } from '@components/containers';
 
 const App = () => {
   return (

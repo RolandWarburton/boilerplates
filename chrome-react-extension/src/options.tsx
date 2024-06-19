@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Options } from './pages/options'
+import { Options } from './pages/options';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const domNode = document.getElementById('root');
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
   {
     path: '*',
     element: <Options />
-  },
+  }
 ]);
 
 root.render(

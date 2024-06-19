@@ -4,8 +4,38 @@ import tseslint from 'typescript-eslint';
 import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js';
 
 export default [
-  { languageOptions: { globals: globals.browser } },
+  // main project config
+  {
+    files: ['src/*.tsx'],
+    rules: {
+      semi: 'error',
+      quotes: ['error', 'single', { allowTemplateLiterals: true }],
+      'no-unused-vars': 'warn',
+      'comma-dangle': ['error', { functions: 'never' }]
+    },
+    plugins: {
+      react: pluginReactConfig
+    },
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      },
+      globals: {
+        ...globals.browser
+      }
+    }
+  },
+  // build file config
+  {
+    files: ['build.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node
+      }
+    }
+  },
   pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
-  pluginReactConfig
+  ...tseslint.configs.recommended
 ];

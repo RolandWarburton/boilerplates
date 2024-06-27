@@ -23,6 +23,10 @@ fetch('http://localhost:3000/auth', {
     return response.json();
   })
   .then((data) => {
+    if (data.code !== 200) {
+      throw new Error(`Returned HTTP ${data.code}. message: ${data.message || "no message provided"}`)
+    }
+    debugger
     let evalString = '';
     evalString += `export TOKEN=${data.data.token};`;
     evalString += 'echo "set TOKEN successfully";';

@@ -30,6 +30,6 @@ fetch('http://localhost:3000/auth', {
     evalString += 'echo "set HEADERS successfully";';
     process.stdout.write(evalString);
   })
-  .catch(() => {
-    process.stdout.write('export TOKEN=1; echo "failed to set token"');
+  .catch((err) => {
+    process.stdout.write(`export TOKEN=1; echo "failed to set token"; echo "${err}"`);
   });

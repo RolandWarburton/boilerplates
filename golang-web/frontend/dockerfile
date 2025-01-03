@@ -1,4 +1,4 @@
-FROM node:18.17.1-slim as base
+FROM node:18.17.1-slim AS base
 # ENV PNPM_HOME="/home/roland/.local/share/pnpm/store/v3"
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -16,11 +16,11 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
 FROM base AS dev_deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
-FROM base as build
+FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
-from base as development
+FROM base AS development
 COPY --from=dev_deps /app/node_modules /app/node_modules
 EXPOSE 3001
 ENV port=443

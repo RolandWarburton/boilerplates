@@ -1,4 +1,4 @@
-FROM nginx:latest as common
+FROM nginx:latest AS common
 
 # Just use root for this
 USER root
@@ -36,16 +36,16 @@ RUN ln -s /etc/nginx/sites-available/* /etc/nginx/sites-enabled/
 
 # These env vars will be used to configure nginx
 ARG EXAMPLE_API_PORT
-ENV EXAMPLE_API_PORT $EXAMPLE_API_PORT
+ENV EXAMPLE_API_PORT=$EXAMPLE_API_PORT
 RUN echo "EXAMPLE_API_PORT=$EXAMPLE_API_PORT"
 RUN find /etc/nginx/locations -type f -exec sed -i "s/\${EXAMPLE_API_PORT}/$EXAMPLE_API_PORT/g" {} \;
 
 # DEVELOPMENT ======================================================================================
-FROM common as development
+FROM common AS development
 WORKDIR /etc/nginx
 COPY ./nginx.conf /etc/nginx
 
 # PRODUCTION =======================================================================================
-FROM common as production
+FROM common AS production
 WORKDIR /etc/nginx
 COPY ./nginx.conf /etc/nginx

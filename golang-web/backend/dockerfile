@@ -2,6 +2,10 @@ FROM golang:1.18-alpine
 
 WORKDIR /app
 
+RUN apk add --no-cache bash
+COPY ./docker-utils/wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
 COPY go.mod ./
 COPY go.sum ./
 
@@ -11,4 +15,4 @@ COPY . ./
 
 RUN go build -o /server
 
-CMD [ "/server" ]
+CMD ["/wait-for-it.sh", "example_db:5432", "--", "/server"]

@@ -20,5 +20,5 @@ See `init.sql` for the following details.
 Connect to the database.
 
 ```none
-docker run -it --rm --network example_net postgres psql -h example_db -U example
+docker exec -it example_db psql -h example_db -U example
 ```

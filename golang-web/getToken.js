@@ -5,11 +5,11 @@ const passwordString = 'rhinos';
 
 // hash the password
 const password = crypto.createHash('sha256').update(passwordString).digest('hex');
+const auth = Buffer.from(`${username}:${password}`).toString('base64');
 
 // request a token
 const body = JSON.stringify({
-  username,
-  password
+  auth
 });
 
 fetch('http://localhost:3000/auth', {

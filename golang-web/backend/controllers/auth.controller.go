@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rolandwarburton/gomvc/errors"
 	database "github.com/rolandwarburton/gomvc/models"
 	"github.com/rolandwarburton/gomvc/services"
 	example_utils "github.com/rolandwarburton/gomvc/utils"
@@ -27,8 +28,8 @@ func NewAuthController(db *gorm.DB) *AuthController {
 // based on this tutorial
 // https://programmer.ink/think/using-jwt-in-the-gin-framework.html
 func (controller AuthController) Authenticate(c *gin.Context) {
-	var user database.Auth
-	err := c.Bind(&user)
+	var auth database.Auth
+	err := c.Bind(&auth)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code":    201,
@@ -37,26 +38,21 @@ func (controller AuthController) Authenticate(c *gin.Context) {
 		return
 	}
 
-	// Verify that the user name and password are correct
-	// create a query for the database
-	var accounts []database.Account
-	var q = make(map[string]string)
-	q["username"] = user.Username
-	q["password"] = user.Password
-	q["is_staff"] = "*"
+	var account database.Account
+	var restError *errors.RestError
 
 	// look up the account
-	services.GetAccountQuery(controller.DB, q, &accounts, true)
-	if len(accounts) == 0 {
+	_, restError = services.Login(controller.DB, &auth, &account)
+	if restError != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code":    202,
-			"message": "Authentication failed. Invalid username of password?",
+			"message": "Authentication failed. Invalid username or password?",
 		})
 		return
 	}
 
 	// Generate Token
-	tokenString, _ := example_utils.GenToken(user.Username)
+	tokenString, _ := example_utils.GenToken(account.Username)
 	c.JSON(http.StatusOK, gin.H{
 		"code":    200,
 		"message": "success",

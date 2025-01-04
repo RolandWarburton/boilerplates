@@ -1,6 +1,7 @@
 package services
 
 import (
+	"encoding/base64"
 	"fmt"
 	"strconv"
 	"strings"
@@ -100,6 +101,39 @@ func PatchAccount(db *gorm.DB, object *database.Account, query map[string]string
 	return gin.H{
 		"count":  dbc.RowsAffected,
 		"result": object,
+	}, nil
+}
+
+// returns account
+func Login(db *gorm.DB, auth *database.Auth, account *database.Account) (gin.H, *errors.RestError) {
+	decodedBytes, err := base64.StdEncoding.DecodeString(auth.Auth)
+	if err != nil {
+		return nil, errors.BadRequest("Failed to decode auth payload")
+	}
+	authString := string(decodedBytes)
+	fmt.Println("Decoded string:", authString)
+
+	// split the username and password
+	var userAndPass = strings.Split(authString, ":")
+	if len(userAndPass) != 2 {
+		fmt.Println("bad request username and password were not decoded")
+		return nil, errors.BadRequest("Failed to decode")
+	}
+
+	username := userAndPass[0]
+	password := userAndPass[1]
+
+	dbc := db.
+		Model(database.Account{}).
+		Where("username = ? AND password = ?", username, password).First(&account)
+
+	if dbc.Error != nil {
+		return nil, errors.NotFound(fmt.Sprintf("account(s) not found: %v", dbc.Error))
+	}
+
+	return gin.H{
+		"count":  dbc.RowsAffected,
+		"result": account,
 	}, nil
 }
 

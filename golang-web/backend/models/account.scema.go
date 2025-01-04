@@ -7,8 +7,8 @@ import (
 )
 
 type Account struct {
-	ID        string    `gorm:"primarykey;size:36;autoIncrement" json:"id"`
-	Username  string    `gorm:"size:50;notNull" json:"username"`
+	ID        string    `gorm:"primaryKey;size:36;default:gen_random_uuid()" json:"id"`
+	Username  string    `gorm:"size:50;notNull;unique" json:"username"`
 	Password  string    `gorm:"size:128;notNull" json:"password"`
 	Is_staff  bool      `gorm:"default:true;notNull" json:"is_staff"`
 	CreatedAt time.Time `gorm:"notNull;type:timestamp" json:"created_at"`

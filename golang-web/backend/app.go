@@ -26,9 +26,10 @@ func main() {
 
 	authController := controllers.NewAuthController(db)
 	accountController := controllers.NewAccountController(db)
+	simpleController := controllers.NewSimpleController()
 
 	// AUTH ROUTES
-	route, _ := routes.GetRoute("auth", routes.Middleware{})
+	route, _ := routes.GetRoute("auth", &routes.Middleware{})
 	route.Register("POST", v1_unauthenticated, authController.Authenticate)
 
 	// ACCOUNT ROUTES
@@ -40,16 +41,22 @@ func main() {
 		// for example
 		// DELETE: []func() gin.HandlerFunc{middleware.CheckAuth},
 	}
-	route, _ = routes.GetRoute("account", *accountMiddleware)
+	route, _ = routes.GetRoute("account", accountMiddleware)
 	route.Register("POST", v1, accountController.PostAccount)
 
-	route, _ = routes.GetRoute("account/:id", *accountMiddleware)
+	route, _ = routes.GetRoute("account/:id", accountMiddleware)
 	route.Register("GET", v1, accountController.GetAccount)
 	route.Register("DELETE", v1, accountController.DeleteAccount)
 	route.Register("PATCH", v1, accountController.PatchAccount)
 
-	route, _ = routes.GetRoute("accounts", *accountMiddleware)
+	route, _ = routes.GetRoute("accounts", accountMiddleware)
 	route.Register("GET", v1, accountController.GetAccountQuery)
+
+	route, _ = routes.GetRoute("simple", accountMiddleware)
+	route.Register("GET", v1, simpleController.SimpleGET)
+
+	route, _ = routes.GetRoute("simple/:id", accountMiddleware)
+	route.Register("GET", v1, simpleController.SimpleGETArgs)
 
 	port := getPort()
 	server := makeServer(port, "debug", router)

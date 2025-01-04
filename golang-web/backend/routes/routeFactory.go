@@ -5,7 +5,7 @@ import (
 )
 
 // factory for creating routes
-func GetRoute(sw string, middleware Middleware) (IRoute, error) {
+func GetRoute(sw string, middleware *Middleware) (IRoute, error) {
 	switch sw {
 	case "account":
 		route := NewBaiscRoute().WithPath("/account").WithMiddleware(middleware)
@@ -18,6 +18,12 @@ func GetRoute(sw string, middleware Middleware) (IRoute, error) {
 		return route, nil
 	case "auth":
 		route := NewBaiscRoute().WithPath("/auth").WithMiddleware(middleware)
+		return route, nil
+	case "simple":
+		route := NewBaiscRoute().WithPath("/simple").WithMiddleware(middleware)
+		return route, nil
+	case "simple/:id":
+		route := NewBaiscRoute().WithPath("/simple/:id")
 		return route, nil
 	}
 

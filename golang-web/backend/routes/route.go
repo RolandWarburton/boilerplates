@@ -62,6 +62,8 @@ func (r Route) Register(verb string, e *gin.RouterGroup, method gin.HandlerFunc)
 		middleware = r.middleware.DELETE
 	case "PATCH":
 		middleware = r.middleware.PATCH
+	default:
+		middleware = nil
 	}
 
 	// append middleware if it exists
@@ -86,7 +88,7 @@ func (r Route) WithPath(path string) Route {
 	return r
 }
 
-func (r Route) WithMiddleware(middleware Middleware) Route {
-	r.middleware = middleware
+func (r Route) WithMiddleware(middleware *Middleware) Route {
+	r.middleware = *middleware
 	return r
 }

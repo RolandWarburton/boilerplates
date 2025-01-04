@@ -1,4 +1,3 @@
-CREATE USER example WITH PASSWORD 'rhinos';
 GRANT ALL PRIVILEGES ON DATABASE example TO example;
 
 CREATE TABLE accounts (
@@ -23,3 +22,7 @@ VALUES ('roland', 'aa342a6b087d9fe25e96457873ca611b35158223281c1985a11cf9ad26f89
 INSERT INTO accounts (username, password, is_staff)
 VALUES ('rinne', '2d2370db2447ff8cf4f3accd68c85aa119a9c893effd200a9b69176e9fc5eb98', TRUE);
 
+-- Grant privileges on the public schema and the table to the example user
+GRANT USAGE, CREATE ON SCHEMA public TO example;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO example;
+GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA public TO example;

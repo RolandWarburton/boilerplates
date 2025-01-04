@@ -17,19 +17,19 @@ import (
 type Server struct {
 	port           string
 	mode           string
-	trustedProxies []string
+	router         *gin.Engine
 	// routes         []routes.Route
 }
 
 func makeServer(
 	port string,
 	mode string,
-	trustedProxies []string,
+	router *gin.Engine,
 ) *Server {
 	return &Server{
 		port,
 		mode,
-		trustedProxies,
+		router,
 	}
 }
 
@@ -49,7 +49,7 @@ func (s *Server) startServer(router *gin.Engine) {
 	addr := fmt.Sprintf("0.0.0.0:%s", s.port)
 	srv := &http.Server{
 		Addr:    addr,
-		Handler: router,
+		Handler: s.router,
 	}
 
 	// run the server in a go routine

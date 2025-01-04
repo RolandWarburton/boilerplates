@@ -22,7 +22,7 @@ func main() {
 	v1_unauthenticated := router.Group("/")
 
 	// an example of applying middleware to an entire route group
-	// v1.Use(middleware.CheckAuth())
+	v1.Use(middleware.CheckAuth())
 
 	authController := controllers.NewAuthController(db)
 	accountController := controllers.NewAccountController(db)
@@ -33,10 +33,12 @@ func main() {
 
 	// ACCOUNT ROUTES
 	accountMiddleware := &routes.Middleware{
-		POST:   []func() gin.HandlerFunc{middleware.CheckAuth},
-		GET:    []func() gin.HandlerFunc{middleware.CheckAuth},
-		PATCH:  []func() gin.HandlerFunc{middleware.CheckAuth},
-		DELETE: []func() gin.HandlerFunc{middleware.CheckAuth},
+		POST:   []func() gin.HandlerFunc{},
+		GET:    []func() gin.HandlerFunc{},
+		PATCH:  []func() gin.HandlerFunc{},
+		DELETE: []func() gin.HandlerFunc{},
+		// for example
+		// DELETE: []func() gin.HandlerFunc{middleware.CheckAuth},
 	}
 	route, _ = routes.GetRoute("account", *accountMiddleware)
 	route.Register("POST", v1, accountController.PostAccount)
@@ -50,6 +52,6 @@ func main() {
 	route.Register("GET", v1, accountController.GetAccountQuery)
 
 	port := getPort()
-	server := makeServer(port, "debug", []string{"127.0.0.1"})
+	server := makeServer(port, "debug", router)
 	server.startServer(router)
 }

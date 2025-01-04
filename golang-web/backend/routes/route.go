@@ -26,41 +26,56 @@ func (c Route) GetPath() string {
 	return c.path
 }
 
-// register a new controller method on this route
 func (r Route) Register(verb string, e *gin.RouterGroup, method gin.HandlerFunc) {
+	var routeFunc func(string, ...gin.HandlerFunc)
+
+	// map the verb to the corresponding Gin route method
 	switch verb {
 	case "GET":
-		if r.middleware.GET == nil {
-			e.GET(r.path, method)
-		} else {
-			for _, m := range r.middleware.GET {
-				e.GET(r.path, m(), method)
-			}
+		routeFunc = func(path string, handlers ...gin.HandlerFunc) {
+			e.GET(path, handlers...)
 		}
 	case "POST":
-		if r.middleware.POST == nil {
-			e.POST(r.path, method)
-		} else {
-			for _, m := range r.middleware.POST {
-				e.POST(r.path, m(), method)
-			}
+		routeFunc = func(path string, handlers ...gin.HandlerFunc) {
+			e.POST(path, handlers...)
 		}
 	case "DELETE":
-		if r.middleware.DELETE == nil {
-			e.DELETE(r.path, method)
-		} else {
-			for _, m := range r.middleware.DELETE {
-				e.DELETE(r.path, m(), method)
-			}
+		routeFunc = func(path string, handlers ...gin.HandlerFunc) {
+			e.DELETE(path, handlers...)
 		}
 	case "PATCH":
-		if r.middleware.PATCH == nil {
-			e.PATCH(r.path, method)
-		} else {
-			for _, m := range r.middleware.PATCH {
-				e.PATCH(r.path, m(), method)
-			}
+		routeFunc = func(path string, handlers ...gin.HandlerFunc) {
+			e.PATCH(path, handlers...)
 		}
+	default:
+		panic("Unsupported HTTP verb")
+	}
+
+	// retrieve middleware for the verb
+	var middleware []func() gin.HandlerFunc
+	switch verb {
+	case "GET":
+		middleware = r.middleware.GET
+	case "POST":
+		middleware = r.middleware.POST
+	case "DELETE":
+		middleware = r.middleware.DELETE
+	case "PATCH":
+		middleware = r.middleware.PATCH
+	}
+
+	// append middleware if it exists
+	if middleware == nil {
+		routeFunc(r.path, method)
+	} else {
+		// construct an array of middleware handlers
+		handlers := make([]gin.HandlerFunc, len(middleware)+1)
+		for i, m := range middleware {
+			handlers[i] = m()
+		}
+		// append the controller handler
+		handlers[len(middleware)] = method
+		routeFunc(r.path, handlers...)
 	}
 }
 

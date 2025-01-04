@@ -92,25 +92,19 @@ curl --insecure -H $HEADERS "https://localhost/api/v1/accounts"
 
 ## Development
 
+Export `TARGET=development`, preferably in `.env`.
+
 To rebuild the example_server.
 
-```none
-docker stop example_server; \
-docker-compose build example_server; \
-docker-compose up -d example_server
-```
+```bash
+# defined as a function in ~/.zshrc
+docker_find_container_name() {
+  docker ps -a --filter "name=$1" --format "{{.Names}}"
+}
 
-To run the front end in development mode, change the `docker-compose.yaml` to target development.
-
-```yaml
-  example_frontend:
-    container_name: example_frontend
-    image: example_frontend
-    build:
-      context: ./frontend
-      # change this line
-      target: development
-      dockerfile: dockerfile
+docker-compose stop example_server; \
+docker rm $(docker_find_container_name example_server); \
+docker-compose up -d --build example_server
 ```
 
 ## Production

@@ -18,7 +18,7 @@ services:
     expose:
       - "443"
       - "80"
-    restart: unless-stopped
+    restart: ${RESTART_POLICY:-on-failure}
     networks:
       - example_net
     volumes:
@@ -39,14 +39,14 @@ services:
     depends_on:
       example_db:
         condition: service_healthy
-    restart: unless-stopped
+    restart: ${RESTART_POLICY:-on-failure}
     networks:
       - example_net
 
   example_db:
     container_name: example_db
     image: postgres_db
-    restart: unless-stopped
+    restart: ${RESTART_POLICY:-on-failure}
     build:
       context: ./database
       dockerfile: dockerfile
@@ -71,7 +71,7 @@ services:
   adminer:
     container_name: adminer
     image: adminer
-    restart: unless-stopped
+    restart: ${RESTART_POLICY:-on-failure}
     ports:
       - 127.0.0.1:8080:8080
     networks:
@@ -82,7 +82,7 @@ services:
     image: example_frontend
     build:
       context: ./frontend
-      target: development
+      target: ${TARGET}
       dockerfile: dockerfile
     environment:
       - PORT=${EXAMPLE_FRONTEND_PORT}
@@ -90,7 +90,7 @@ services:
       - "${EXAMPLE_FRONTEND_PORT}:${EXAMPLE_FRONTEND_PORT}"
     expose:
       - "${EXAMPLE_FRONTEND_PORT}"
-    restart: unless-stopped
+    restart: ${RESTART_POLICY:-on-failure}
     networks:
       - example_net
     volumes:

@@ -46,7 +46,7 @@ services:
   example_db:
     container_name: example_db
     image: postgres_db
-    restart: always
+    restart: unless-stopped
     build:
       context: ./database
       dockerfile: dockerfile
@@ -71,7 +71,7 @@ services:
   adminer:
     container_name: adminer
     image: adminer
-    restart: always
+    restart: unless-stopped
     ports:
       - 127.0.0.1:8080:8080
     networks:

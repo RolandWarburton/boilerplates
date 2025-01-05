@@ -2,6 +2,7 @@ import * as esbuild from "esbuild";
 import { denoPlugins } from "esbuild-deno-loader";
 import { htmlCopyPlugin } from "./htmlCopyPlugin.ts";
 import { join } from "jsr:@std/path";
+import { rebuildLoggerPlugin } from "./loggerPlugin.ts";
 
 console.log(`Running esbuild version ${esbuild.version}`);
 
@@ -9,6 +10,7 @@ const settings: esbuild.BuildOptions = {
   plugins: [
     ...denoPlugins(),
     htmlCopyPlugin({ source: join(Deno.cwd(), "./src/index.html") }),
+    rebuildLoggerPlugin(),
   ],
   entryPoints: ["./src/main.tsx"],
   outdir: "./dist",
@@ -18,8 +20,11 @@ const settings: esbuild.BuildOptions = {
   sourcemap: true,
 };
 
-const result = await esbuild.build({ ...settings });
+const ctx = await esbuild.context({ ...settings });
+await ctx.watch();
 
-console.log(result);
-
-esbuild.stop();
+await ctx.serve({
+  servedir: "./dist",
+}).then(({ host, port }) => {
+  console.log(`${host}:${port}`);
+});

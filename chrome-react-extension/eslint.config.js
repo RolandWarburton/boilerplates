@@ -6,7 +6,7 @@ import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js';
 export default [
   // main project config
   {
-    files: ['src/*.tsx'],
+    files: ['src/**/*.tsx'],
     rules: {
       semi: 'error',
       quotes: ['error', 'single', { allowTemplateLiterals: true }],
